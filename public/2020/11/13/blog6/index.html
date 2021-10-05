@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dark Side of Component sharing | Data Initiative</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="blog_tagblog_native_tagblog_native_tag2" />
+  
+  
+  
+  
+  <meta name="description" content="By Alissa Chen and Koen Pauwels  For companies looking to lower costs across their vertical product lines, component sharing is an attractive opportunity. Cutting costs is not always beneficial, howev">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dark Side of Component sharing">
+<meta property="og:url" content="http://example.com/2020/11/13/blog6/index.html">
+<meta property="og:site_name" content="Data Initiative">
+<meta property="og:description" content="By Alissa Chen and Koen Pauwels  For companies looking to lower costs across their vertical product lines, component sharing is an attractive opportunity. Cutting costs is not always beneficial, howev">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://analyticdashboards.files.wordpress.com/2020/11/screen-shot-2020-11-13-at-12.27.58-pm.png">
+<meta property="og:image" content="https://analyticdashboards.files.wordpress.com/2020/11/screen-shot-2020-11-12-at-8.33.54-pm.png?w=1024">
+<meta property="article:published_time" content="2020-11-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-05T09:13:59.863Z">
+<meta property="article:author" content="Lydia">
+<meta property="article:tag" content="blog_tag">
+<meta property="article:tag" content="blog_native_tag">
+<meta property="article:tag" content="blog_native_tag2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://analyticdashboards.files.wordpress.com/2020/11/screen-shot-2020-11-13-at-12.27.58-pm.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Data Initiative" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+  
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <div class="site-header-image">
+  <img id="originBg" width="100%" alt="Hike News" src="https://source.unsplash.com/collection/954550/1920x1080">
+</div>
+
+<div id="header-blur" class="site-header-image blur" style="position: absolute; top:0; height: 207px; min-height: 207px; min-width: 100%;">
+  <img id="blurBg" width="100%" style="top: 96%" alt="Hike News" src="">
+</div>
+
+<script>
+      var imgUrls = "css/images/pose01.jpg,https://source.unsplash.com/collection/954550/1920x1080,https://source.unsplash.com/collection/954550/1920x1081".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+        document.getElementById("blurBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/' + imgUrls[random];
+        document.getElementById("blurBg").src='/' + imgUrls[random];
+      }
+  </script>
+
+<header id="allheader" class="site-header" role="banner" style="width: 100%; position: absolute; top:0; background: rgba(255,255,255,.8);" >
+  <div class="clearfix container">
+      <div class="site-branding">
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="124px" height="124px" alt="Hike News" src=" /images/logo.png">
+                Data Initiative
+              </a>
+            
+            
+          </h1>
+          
+          
+            <div class="site-description">The Digital, Analytics, Technology and Automation Initiative is enabling a generation of intellectual leadership in the areas of digital convergence.</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/about"> <a class="" href="/about">About</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/forum"> <a class="" href="/forum">data forum</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/categories/blog"> <a class="" href="/categories/blog">blog</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="team"> <a class="" href="/team">team</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+
+  <div id="container">
+    <div id="wrap" style="background: url(images/111.jpeg);">
+
+      
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;">
+  <div style="background: #fcfcfc;">
+    <article id="post-blog6" 
+      class="article article-type-post" itemscope itemprop="blogPost" >
+      <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+        
+        
+          <header class="article-header">
+            
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Dark Side of Component sharing
+    </h1>
+  
+
+          </header>
+        
+        <!-- <div class="article-meta">
+          
+	<a href="/2020/11/13/blog6/" class="article-date">
+	  <time datetime="2020-11-12T16:00:00.000Z" itemprop="datePublished">November 13, 2020</time>
+	</a>
+
+        </div> -->
+        <div class="article-entry" itemprop="articleBody">
+          
+            <p>By Alissa Chen and Koen Pauwels</p>
+<p><img src="https://analyticdashboards.files.wordpress.com/2020/11/screen-shot-2020-11-13-at-12.27.58-pm.png"></p>
+<p>For companies looking to lower costs across their vertical product lines, component sharing is an attractive opportunity. Cutting costs is not always beneficial, however, as worsened customer brand evaluation may outweigh any savings incurred by such component sharing techniques. Indeed, our survey finding that  93% of car buyers were aware of the fact that car producers commonly share components between brands. But does it substantially drive their purchase decisions? We answered this question in our research “Assessing Consequences of Component Sharing across Brands in the Vertical Product Line in the Automotive Market.” </p>
+<p>Component type and the source of component sharing both drove the magnitude of the customer evaluation effect. First, sharing the interior, wheels, or the chassis has a significant larger negative impact than sharing the wiper component. Second, consumers reacted very differently to a higher-end car sharing components with a lower-end car than vice-versa. A visual breakdown of our categorizations conveys the many ways component sharing exists inside a vertical product line:</p>
+<p><img src="https://analyticdashboards.files.wordpress.com/2020/11/screen-shot-2020-11-12-at-8.33.54-pm.png?w=1024"></p>
+<p>Sharing components between brands in the vertical product line has negative consequences for the higher-positioned brand, while it has positive consequences for the lower-positioned brand. Overall, we also established that volume (middle positioned) brands are less susceptible to these forces relative to luxury or economy offerings. Below is an illustrated example of component sharing, in this case the vehicle’s engine, between varying products in manufacturer’s lines:</p>
+<p>The initial source of the product significantly impacted the consumers’ negative evaluations. Luxury brands are less affected by sharing their components with lower-end brands; however, these lower-end brands benefit most from when they send a component to a higher-end brand.</p>
+<p>Overall, we suggest management be wary of sharing components from higher-end products to lower-end goods in the vertical line. Sharing components between a volume brand and an economy brand may be a viable strategy. The communication of sharing must align with our source component findings as to mitigate negative impacts to the higher-end brand.</p>
+
+          
+        </div>
+    
+        <footer class="entry-meta entry-footer">
+          
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+
+        </footer>
+        <hr class="entry-footer-hr">
+      </div>
+    
+      
+    
+      <!-- 
+        
+<nav id="article-nav">
+  
+    <a href="/2021/03/31/news2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Lessons learned: Getting to the root of the Suez Canal crisis
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/01/blog5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Launch products in this recession</div>
+    </a>
+  
+</nav>
+
+       -->
+    </article>
+    </div>
+
+
+
+
+
+
+
+
+
+<!-- 
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav">None</ol>
+    
+    </div>
+  </aside>
+ --></section>
+        
+      </div>
+      
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/forum" class="mobile-nav-link">Data Forum</a>
+  
+    <a href="/categories/blog" class="mobile-nav-link">Blog</a>
+  
+    <a href="/team" class="mobile-nav-link">Team</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2021 Data Initiative All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              <br> Powered by Lydia (lydiaecheng@outlook.com) <br>
+              Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">@hipaper</a>
+            </span>
+          
+      </div>
+
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/bootstrap.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
